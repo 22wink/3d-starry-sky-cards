@@ -1,78 +1,3 @@
-// 卡片数据
-const cards = [
-  {
-    id: '1',
-    imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop',
-    alt: 'Mountain Landscape',
-    title: 'Mountain Landscape'
-  },
-  {
-    id: '2',
-    imageUrl: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&h=600&fit=crop',
-    alt: 'Ocean View',
-    title: 'Ocean View'
-  },
-  {
-    id: '3',
-    imageUrl: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=600&fit=crop',
-    alt: 'Forest Path',
-    title: 'Forest Path'
-  },
-  {
-    id: '4',
-    imageUrl: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=600&fit=crop',
-    alt: 'Desert Sunset',
-    title: 'Desert Sunset'
-  },
-  {
-    id: '5',
-    imageUrl: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&h=600&fit=crop',
-    alt: 'Mountain Lake',
-    title: 'Mountain Lake'
-  },
-  {
-    id: '6',
-    imageUrl: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=400&h=600&fit=crop',
-    alt: 'Snowy Peak',
-    title: 'Snowy Peak'
-  },
-  {
-    id: '7',
-    imageUrl: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=600&fit=crop',
-    alt: 'Nature Scene',
-    title: 'Nature Scene'
-  },
-  {
-    id: '8',
-    imageUrl: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400&h=600&fit=crop',
-    alt: 'Tropical Beach',
-    title: 'Tropical Beach'
-  },
-  {
-    id: '9',
-    imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop',
-    alt: 'Mountain Range',
-    title: 'Mountain Range'
-  },
-  {
-    id: '10',
-    imageUrl: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&h=600&fit=crop',
-    alt: 'Coastal View',
-    title: 'Coastal View'
-  },
-  {
-    id: '11',
-    imageUrl: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=600&fit=crop',
-    alt: 'Green Forest',
-    title: 'Green Forest'
-  },
-  {
-    id: '12',
-    imageUrl: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=600&fit=crop',
-    alt: 'Desert Dunes',
-    title: 'Desert Dunes'
-  }
-];
 
 // 状态管理
 const state = {
@@ -236,7 +161,7 @@ function generateCardPositions(numCards) {
     const x = Math.cos(theta) * radiusAtY;
     const z = Math.sin(theta) * radiusAtY;
 
-    const layerRadius = 12 + (i % 3) * 4;
+    const layerRadius = 30 + (i % 3) * 16;
 
     positions.push({
       x: x * layerRadius,
@@ -268,7 +193,7 @@ function initScene() {
   
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 0, 15);
+  camera.position.set(0, 0, 60);
 
   renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -280,11 +205,11 @@ function initScene() {
 
   // 点光源
   const pointLight1 = new THREE.PointLight(0xffffff, 0.6);
-  pointLight1.position.set(10, 10, 10);
+  pointLight1.position.set(40, 40, 40);
   scene.add(pointLight1);
 
   const pointLight2 = new THREE.PointLight(0xffffff, 0.3);
-  pointLight2.position.set(-10, -10, -10);
+  pointLight2.position.set(-40, -40, -40);
   scene.add(pointLight2);
 
   // 创建参考球体
@@ -307,13 +232,13 @@ function initScene() {
   scene.add(centerSphere);
 
   // 外层参考球体
-  const outerSphere1 = createWireframeSphere(12, 0x31b8c6, 0.05);
+  const outerSphere1 = createWireframeSphere(40, 0x31b8c6, 0.05);
   scene.add(outerSphere1);
 
-  const outerSphere2 = createWireframeSphere(16, 0x31b8c6, 0.03);
+  const outerSphere2 = createWireframeSphere(56, 0x31b8c6, 0.03);
   scene.add(outerSphere2);
 
-  const outerSphere3 = createWireframeSphere(20, 0x31b8c6, 0.02);
+  const outerSphere3 = createWireframeSphere(72, 0x31b8c6, 0.02);
   scene.add(outerSphere3);
 
   // 生成卡片位置
@@ -502,7 +427,7 @@ function initScene() {
 // 简化的轨道控制器
 let isDragging = false;
 let previousMousePosition = { x: 0, y: 0 };
-let cameraDistance = 15;
+let cameraDistance = 60;
 let cameraRotation = { x: 0, y: 0 };
 
 // 惯性滚动相关
@@ -625,7 +550,7 @@ function initOrbitControls() {
     e.preventDefault();
     const delta = e.deltaY * 0.01;
     cameraDistance += delta;
-    cameraDistance = Math.max(5, Math.min(40, cameraDistance));
+    cameraDistance = Math.max(20, Math.min(160, cameraDistance));
   });
 
   canvas.addEventListener('click', (e) => {
@@ -820,39 +745,90 @@ function openModal(card) {
   state.selectedCard = card;
   const modal = document.getElementById('card-modal');
   const modalImage = document.getElementById('modal-image');
+  const modalVideo = document.getElementById('modal-video');
   const modalTitle = document.getElementById('modal-title');
 
-  modalImage.src = card.imageUrl;
-  modalImage.alt = card.alt;
-  modalTitle.textContent = card.title;
+  // 根据卡片类型显示图片或视频
+  if (card.type === 'video' && card.videoUrl) {
+    // 显示视频，隐藏图片
+    modalImage.classList.add('hidden');
+    modalVideo.classList.remove('hidden');
+    modalVideo.src = card.videoUrl;
+    modalVideo.load(); // 重新加载视频
+    modalVideo.play().catch(err => {
+      console.warn('视频自动播放失败:', err);
+    });
+  } else {
+    // 显示图片，隐藏视频
+    modalImage.classList.remove('hidden');
+    modalVideo.classList.add('hidden');
+    modalImage.src = card.imageUrl;
+    modalImage.alt = card.alt;
+    // 停止视频播放
+    modalVideo.pause();
+    modalVideo.src = '';
+  }
 
+  modalTitle.textContent = card.title;
   modal.classList.remove('hidden');
 
-  // 3D 卡片悬停效果
-  setupModalCard3D();
+  // 3D 卡片悬停效果（仅对图片启用，视频需要正常交互）
+  setupModalCard3D(card.type === 'video');
 }
 
 function closeModal() {
   const modal = document.getElementById('card-modal');
+  const modalVideo = document.getElementById('modal-video');
+  
+  // 停止视频播放
+  modalVideo.pause();
+  modalVideo.src = '';
+  
   modal.classList.add('hidden');
   state.selectedCard = null;
 }
 
-function setupModalCard3D() {
+// 保存事件处理函数引用，以便可以移除它们
+let modal3DHandlers = {
+  mouseenter: null,
+  mouseleave: null,
+  mousemove: null
+};
+
+function setupModalCard3D(disable3D = false) {
   const modalCard = document.getElementById('modal-card');
+  
+  // 移除之前的事件监听器（如果存在）
+  if (modal3DHandlers.mouseenter) {
+    modalCard.removeEventListener('mouseenter', modal3DHandlers.mouseenter);
+    modalCard.removeEventListener('mouseleave', modal3DHandlers.mouseleave);
+    modalCard.removeEventListener('mousemove', modal3DHandlers.mousemove);
+    modal3DHandlers.mouseenter = null;
+    modal3DHandlers.mouseleave = null;
+    modal3DHandlers.mousemove = null;
+  }
+
+  // 如果是视频模式，禁用3D效果
+  if (disable3D) {
+    modalCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+    modalCard.style.transition = 'all 0.5s ease-out';
+    return;
+  }
+
   let isHovered = false;
 
-  modalCard.addEventListener('mouseenter', () => {
+  // 创建命名函数以便后续移除
+  modal3DHandlers.mouseenter = () => {
     isHovered = true;
-  });
+  };
 
-  modalCard.addEventListener('mouseleave', () => {
+  modal3DHandlers.mouseleave = () => {
     isHovered = false;
     modalCard.style.transition = 'transform 0.5s ease-out';
     modalCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-  });
+  };
 
-  modalCard.addEventListener('mousemove', (e) => {
+  modal3DHandlers.mousemove = (e) => {
     if (!isHovered) return;
 
     const rect = modalCard.getBoundingClientRect();
@@ -866,7 +842,12 @@ function setupModalCard3D() {
     const rotateY = (centerX - x) / 15;
 
     modalCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  });
+  };
+
+  // 添加事件监听器
+  modalCard.addEventListener('mouseenter', modal3DHandlers.mouseenter);
+  modalCard.addEventListener('mouseleave', modal3DHandlers.mouseleave);
+  modalCard.addEventListener('mousemove', modal3DHandlers.mousemove);
 }
 
 // 设置事件监听器
@@ -885,8 +866,14 @@ function setupEventListeners() {
   document.getElementById('download-btn').addEventListener('click', () => {
     if (state.selectedCard) {
       const link = document.createElement('a');
-      link.href = state.selectedCard.imageUrl;
-      link.download = state.selectedCard.title;
+      // 根据卡片类型下载图片或视频
+      if (state.selectedCard.type === 'video' && state.selectedCard.videoUrl) {
+        link.href = state.selectedCard.videoUrl;
+        link.download = state.selectedCard.title + '.mp4';
+      } else {
+        link.href = state.selectedCard.imageUrl;
+        link.download = state.selectedCard.title;
+      }
       link.click();
     }
   });

@@ -121,7 +121,8 @@ body {
   aspect-ratio: 3 / 4;
 }
 
-.modal-image-container img {
+.modal-image-container img,
+.modal-image-container video {
   position: absolute;
   inset: 0;
   height: 100%;
@@ -131,6 +132,14 @@ body {
   object-fit: cover;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 6px 0px;
   opacity: 1;
+}
+
+.modal-image-container video {
+  object-fit: contain; /* 视频使用contain以显示完整内容 */
+}
+
+.modal-media.hidden {
+  display: none;
 }
 
 .modal-title {

@@ -25,7 +25,8 @@
       </button>
       <div id="modal-card" class="modal-card">
         <div class="modal-image-container">
-          <img id="modal-image" src="" alt="" />
+          <img id="modal-image" src="" alt="" class="modal-media" />
+          <video id="modal-video" src="" controls preload="metadata" class="modal-media hidden"></video>
         </div>
         <h3 id="modal-title" class="modal-title"></h3>
         <div class="modal-buttons">
@@ -55,6 +56,7 @@
 
   <!-- Three.js 库 -->
   <script src="/public/three.min.js"></script>
+  <script src="cardsData.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
