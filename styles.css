@@ -1,0 +1,238 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #000000;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+#starfield-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: #000000;
+}
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+/* UI 覆盖层 */
+.ui-overlay {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 20;
+  color: white;
+  pointer-events: none;
+}
+
+.ui-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.ui-subtitle {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* 模态框样式 */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  position: relative;
+  max-width: 448px;
+  width: 100%;
+  margin: 0 16px;
+}
+
+.close-btn {
+  position: absolute;
+  top: -48px;
+  right: 0;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.2s;
+  z-index: 10;
+}
+
+.close-btn:hover {
+  color: #9ca3af;
+}
+
+.modal-card {
+  position: relative;
+  cursor: pointer;
+  border-radius: 16px;
+  background: #1F2121;
+  padding: 16px;
+  width: 100%;
+  transition: all 0.5s ease-out;
+  transform-style: preserve-3d;
+  box-shadow: rgba(0, 0, 0, 0.01) 0px 520px 146px 0px,
+              rgba(0, 0, 0, 0.04) 0px 333px 133px 0px,
+              rgba(0, 0, 0, 0.26) 0px 83px 83px 0px,
+              rgba(0, 0, 0, 0.29) 0px 21px 46px 0px;
+}
+
+.modal-image-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 16px;
+  aspect-ratio: 3 / 4;
+}
+
+.modal-image-container img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 16px;
+  background: #000000;
+  object-fit: cover;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 6px 0px;
+  opacity: 1;
+}
+
+.modal-title {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-download,
+.btn-favorite {
+  display: inline-flex;
+  height: 36px;
+  cursor: pointer;
+  user-select: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: black;
+  background-color: #31b8c6;
+  border: none;
+  outline: none;
+  transition: all 0.3s ease-out;
+  padding: 0 16px;
+}
+
+.btn-download {
+  flex: 1;
+}
+
+.btn-favorite {
+  width: 36px;
+  padding: 0;
+}
+
+.btn-download:hover,
+.btn-favorite:hover {
+  opacity: 0.8;
+}
+
+.btn-download:active,
+.btn-favorite:active {
+  transform: scale(0.97);
+  transition-duration: 150ms;
+}
+
+.btn-download svg,
+.btn-favorite svg {
+  margin-right: 6px;
+}
+
+.btn-favorite svg {
+  margin-right: 0;
+}
+
+.btn-favorite.favorited svg {
+  fill: currentColor;
+}
+
+/* 3D 卡片样式（在 Three.js 中通过 HTML 渲染） */
+.card-html {
+  width: 160px;
+  height: 208px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+  background: #1F2121;
+  padding: 12px;
+  user-select: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card-html.hovered {
+  transform: scale(1.15);
+  box-shadow: 0 25px 50px rgba(49, 184, 198, 0.5), 0 0 30px rgba(49, 184, 198, 0.3);
+  border: 2px solid rgba(49, 184, 198, 0.5);
+}
+
+.card-html img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.card-html p {
+  margin-top: 4px;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
